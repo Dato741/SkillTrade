@@ -1,0 +1,67 @@
+# 🔧 Build folders
+bin/
+obj/
+
+# 🧠 User-specific files
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# 👀 Visual Studio folder
+.vs/
+
+# 🧪 Test results
+TestResults/
+
+# 🧵 NuGet
+*.nupkg
+*.snupkg
+packages/
+*.nuspec
+
+# 🧙 Entity Framework
+Migrations/
+
+# 📂 Logs
+*.log
+
+# 🔐 Secret configs
+appsettings.Development.json
+appsettings.*.local.json
+secrets.json
+
+# 🧼 Rider / JetBrains stuff
+.idea/
+
+# 💻 VS Code junk
+.vscode/
+
+# 📄 OS-specific trash
+.DS_Store
+Thumbs.db
+
+# ⚙️ SQLite/Local DBs (if used)
+*.db
+*.sqlite
+*.mdf
+*.ldf
+
+# 🧪 Coverage reports
+coverage/
+*.coverage
+*.coveragexml
+*.codecoverage
+
+# 📦 Node_modules (in case you add frontend)
+node_modules/
+
+# ⚒️ Global JSON SDK settings
+global.json
+
+# 💣 Ignore ALL .env and config templates
+.env
+.env.*
+
+# 🔄 Git conflict files
+*.orig

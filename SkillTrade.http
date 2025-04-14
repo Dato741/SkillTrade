@@ -1,0 +1,6 @@
+@SkillTrade_HostAddress = http://localhost:5230
+
+GET {{SkillTrade_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

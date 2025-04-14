@@ -6,6 +6,8 @@ using Microsoft.IdentityModel.Tokens;
 using Scalar.AspNetCore;
 using SkillTrade.Data;
 using SkillTrade.Identity;
+using SkillTrade.Interfaces;
+using SkillTrade.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 var config = builder.Configuration;
@@ -14,9 +16,6 @@ builder.Services.AddDbContext<SkillTradeDbContext>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
 });
-
-builder.Services.AddControllers();
-builder.Services.AddOpenApi();
 
 builder.Services.AddIdentity<UserIdentity, IdentityRole>(options =>
 {
@@ -47,6 +46,11 @@ builder.Services.AddAuthentication(x =>
         ValidateIssuerSigningKey = true
     };
 });
+
+
+builder.Services.AddControllers();
+builder.Services.AddOpenApi();
+builder.Services.AddScoped<ITokenService, TokenService>();
 
 var app = builder.Build();
 

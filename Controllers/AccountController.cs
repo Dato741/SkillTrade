@@ -1,7 +1,9 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.IdentityModel.Tokens;
 using SkillTrade.Dtos.Account;
 using SkillTrade.Identity;
+using SkillTrade.Interfaces;
 
 namespace SkillTrade.Controllers
 {
@@ -10,10 +12,12 @@ namespace SkillTrade.Controllers
     public class AccountController : ControllerBase
     {
         private readonly UserManager<UserIdentity> _userManager;
+        private readonly ITokenService _tokenService;
 
-        public AccountController(UserManager<UserIdentity> userManager)
+        public AccountController(UserManager<UserIdentity> userManager, ITokenService tokenService)
         {
             _userManager = userManager;
+            _tokenService = tokenService;
         }
 
         [HttpPost("register")]
@@ -38,7 +42,12 @@ namespace SkillTrade.Controllers
 
                     if (roleResult.Succeeded)
                     {
-                        return Ok("User created");
+                        return Ok(new NewUserDto
+                        {
+                            Username = appUser.UserName,
+                            Email = appUser.Email,
+                            Token = _tokenService.CreateToken(appUser)
+                        });
                     }
                     else
                     {

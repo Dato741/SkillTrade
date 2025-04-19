@@ -13,11 +13,13 @@ namespace SkillTrade.Controllers
     {
         private readonly UserManager<UserIdentity> _userManager;
         private readonly ITokenService _tokenService;
+        private readonly SignInManager<UserIdentity> _signInManager;
 
-        public AccountController(UserManager<UserIdentity> userManager, ITokenService tokenService)
+        public AccountController(UserManager<UserIdentity> userManager, ITokenService tokenService, SignInManager<UserIdentity> signInManager)
         {
             _userManager = userManager;
             _tokenService = tokenService;
+            _signInManager = signInManager;
         }
 
         [HttpPost("register")]
@@ -63,6 +65,27 @@ namespace SkillTrade.Controllers
             {
                 return StatusCode(500, e);
             }
+        }
+
+        [HttpPost("login")]
+        public async Task<IActionResult> Login([FromBody] LoginDto loginDto)
+        {
+            UserIdentity? user = await _userManager.FindByNameAsync(loginDto.Username);
+
+            if (user == null) return Unauthorized("Incorrect username");
+
+            var result = await _signInManager.CheckPasswordSignInAsync(user, loginDto.Password, false);
+
+            if (!result.Succeeded) return Unauthorized("Incorrect password");
+
+            NewUserDto userDto = new NewUserDto
+            {
+                Username = user.UserName!,
+                Email = user.Email!,
+                Token = _tokenService.CreateToken(user)
+            };
+
+            return Ok(userDto);
         }
     }
 }

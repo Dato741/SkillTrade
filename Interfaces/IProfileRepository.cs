@@ -9,7 +9,7 @@ namespace SkillTrade.Interfaces
         public Task<List<Profile>> GetAllProfilesAsync();
         public Task<Profile?> GetProfileByIdAsync(int id);
         public Task<Profile> CreateProfileAsync(Profile profile);
-        public Task UpdateProfileAsync(Profile profile, Profile updatedProfile);
+        public Task UpdateProfileAsync(string guid, Profile updatedProfile);
         public Task DeleteProfileAsync(int id);
     }
 }

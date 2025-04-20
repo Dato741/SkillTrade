@@ -20,9 +20,6 @@ TestResults/
 packages/
 *.nuspec
 
-# 🧙 Entity Framework
-Migrations/
-
 # 📂 Logs
 *.log
 

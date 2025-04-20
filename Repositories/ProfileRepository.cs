@@ -35,8 +35,11 @@ namespace SkillTrade.Repositories
 
             return profile;
         }
-        public async Task UpdateProfileAsync(Profile profile, Profile updatedProfile)
+        public async Task UpdateProfileAsync(string guid, Profile updatedProfile)
         {
+            Profile profile = (await _context.Profiles.FirstOrDefaultAsync(p => p.UserId == guid))!;
+            updatedProfile.Id = profile.Id;
+
             _context.Profiles.Entry(profile).CurrentValues.SetValues(updatedProfile);
             await _context.SaveChangesAsync();
         }

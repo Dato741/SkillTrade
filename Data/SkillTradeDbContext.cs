@@ -13,7 +13,7 @@ namespace SkillTrade.Data
         {
         }
 
-        public DbSet<User> UsersSkillTrade { get; set; }
+        public DbSet<Profile> Profiles { get; set; }
         public DbSet<ServiceListing> ServiceListings { get; set; }
         public DbSet<Category> Categories { get; set; }
         public DbSet<Booking> Bookings { get; set; }
@@ -42,7 +42,7 @@ namespace SkillTrade.Data
                 }
             );
 
-            builder.Entity<User>()
+            builder.Entity<Profile>()
                 .HasMany(u => u.ServiceList)
                 .WithOne(s => s.User)
                 .HasForeignKey(s => s.UserId)

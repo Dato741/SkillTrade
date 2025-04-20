@@ -4,9 +4,11 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Scalar.AspNetCore;
+using SkillTrade;
 using SkillTrade.Data;
 using SkillTrade.Identity;
 using SkillTrade.Interfaces;
+using SkillTrade.Repositories;
 using SkillTrade.Services;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -49,8 +51,10 @@ builder.Services.AddAuthentication(x =>
 
 
 builder.Services.AddControllers();
-builder.Services.AddOpenApi();
+builder.Services.AddOpenApi("v1", options => { options.AddDocumentTransformer<BearerSecuritySchemeTransformer>(); });
+
 builder.Services.AddScoped<ITokenService, TokenService>();
+builder.Services.AddScoped<IProfileRepository, ProfileRepository>();
 
 var app = builder.Build();
 

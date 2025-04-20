@@ -5,7 +5,7 @@ using SkillTrade.Interfaces;
 
 namespace SkillTrade.Repositories
 {
-    public class ProfileRepository : IProfileInterface
+    public class ProfileRepository : IProfileRepository
     {
         private readonly SkillTradeDbContext _context;
 
@@ -28,14 +28,16 @@ namespace SkillTrade.Repositories
             return profile;
         }
 
-        public async Task CreateProfileAsync(Profile userProfile)
+        public async Task<Profile> CreateProfileAsync(Profile profile)
         {
-            await _context.Profiles.AddAsync(userProfile);
+            await _context.Profiles.AddAsync(profile);
             await _context.SaveChangesAsync();
+
+            return profile;
         }
-        public async Task UpdateProfileAsync(Profile userProfile, Profile updatedUserProfile)
+        public async Task UpdateProfileAsync(Profile profile, Profile updatedProfile)
         {
-            _context.Profiles.Entry(userProfile).CurrentValues.SetValues(updatedUserProfile);
+            _context.Profiles.Entry(profile).CurrentValues.SetValues(updatedProfile);
             await _context.SaveChangesAsync();
         }
 

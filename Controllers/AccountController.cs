@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using SkillTrade.Dtos.Account;
+using SkillTrade.Entities;
 using SkillTrade.Identity;
 using SkillTrade.Interfaces;
 
@@ -14,12 +15,14 @@ namespace SkillTrade.Controllers
         private readonly UserManager<UserIdentity> _userManager;
         private readonly ITokenService _tokenService;
         private readonly SignInManager<UserIdentity> _signInManager;
+        private readonly IProfileRepository _profileRepo;
 
-        public AccountController(UserManager<UserIdentity> userManager, ITokenService tokenService, SignInManager<UserIdentity> signInManager)
+        public AccountController(UserManager<UserIdentity> userManager, ITokenService tokenService, SignInManager<UserIdentity> signInManager, IProfileRepository profileRepository)
         {
             _userManager = userManager;
             _tokenService = tokenService;
             _signInManager = signInManager;
+            _profileRepo = profileRepository;
         }
 
         [HttpPost("register")]
@@ -44,6 +47,15 @@ namespace SkillTrade.Controllers
 
                     if (roleResult.Succeeded)
                     {
+                        Profile profile = new Profile
+                        {
+                            Name = registerDto.Name,
+                            LastName = registerDto.LastName,
+                            UserId = appUser.Id
+                        };
+
+                        await _profileRepo.CreateProfileAsync(profile);
+
                         return Ok(new NewUserDto
                         {
                             Username = appUser.UserName,

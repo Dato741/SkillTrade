@@ -4,12 +4,12 @@ using SkillTrade.Entities;
 
 namespace SkillTrade.Interfaces
 {
-    public interface IProfileInterface
+    public interface IProfileRepository
     {
         public Task<List<Profile>> GetAllProfilesAsync();
         public Task<Profile?> GetProfileByIdAsync(int id);
-        public Task CreateProfileAsync(Profile userProfile);
-        public Task UpdateProfileAsync(Profile userProfile, Profile updatedUserProfile);
+        public Task<Profile> CreateProfileAsync(Profile profile);
+        public Task UpdateProfileAsync(Profile profile, Profile updatedProfile);
         public Task DeleteProfileAsync(int id);
     }
 }

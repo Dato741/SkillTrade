@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SkillTrade.Data;
 
@@ -11,9 +12,11 @@ using SkillTrade.Data;
 namespace SkillTrade.Data.Migrations
 {
     [DbContext(typeof(SkillTradeDbContext))]
-    partial class SkillTradeDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250421093442_Profile nav property name correction")]
+    partial class Profilenavpropertynamecorrection
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -278,16 +281,9 @@ namespace SkillTrade.Data.Migrations
                     b.Property<int?>("CategoryId")
                         .HasColumnType("int");
 
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("PayOffered")
-                        .HasColumnType("int");
 
                     b.Property<int?>("ProfileId")
                         .HasColumnType("int");

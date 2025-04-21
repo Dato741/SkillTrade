@@ -44,8 +44,8 @@ namespace SkillTrade.Data
 
             builder.Entity<Profile>()
                 .HasMany(u => u.ServiceList)
-                .WithOne(s => s.User)
-                .HasForeignKey(s => s.UserId)
+                .WithOne(s => s.Profile)
+                .HasForeignKey(s => s.ProfileId)
                 .OnDelete(DeleteBehavior.Restrict);
 
 
@@ -56,9 +56,9 @@ namespace SkillTrade.Data
                 .OnDelete(DeleteBehavior.Restrict);
 
             builder.Entity<Booking>()
-                .HasOne(b => b.User)
+                .HasOne(b => b.Profile)
                 .WithMany(u => u.Bookings)
-                .HasForeignKey(b => b.UserId)
+                .HasForeignKey(b => b.ProfileId)
                 .OnDelete(DeleteBehavior.Restrict);
 
             builder.Entity<Booking>()
@@ -74,9 +74,9 @@ namespace SkillTrade.Data
                 .OnDelete(DeleteBehavior.Restrict);
 
             builder.Entity<Review>()
-                .HasOne(r => r.User)
+                .HasOne(r => r.Profile)
                 .WithMany()
-                .HasForeignKey(r => r.UserId)
+                .HasForeignKey(r => r.ProfileId)
                 .OnDelete(DeleteBehavior.Restrict);
 
         }

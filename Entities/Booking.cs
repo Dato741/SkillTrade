@@ -5,10 +5,10 @@ namespace SkillTrade.Entities
     public class Booking
     {
         public int Id { get; set; }
-        public int? UserId { get; set; }
+        public int? ProfileId { get; set; }
 
         [JsonIgnore]
-        public Profile? User { get; set; }
+        public Profile? Profile { get; set; }
         public int? ServiceId { get; set; }
 
         [JsonIgnore]

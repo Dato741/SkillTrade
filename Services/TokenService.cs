@@ -28,7 +28,8 @@ namespace SkillTrade.Services
             List<Claim> claims = new List<Claim>
             {
                 new Claim(JwtRegisteredClaimNames.Email, user.Email!),
-                new Claim(JwtRegisteredClaimNames.GivenName, user.UserName!)
+                new Claim(JwtRegisteredClaimNames.GivenName, user.UserName!),
+                new Claim(ClaimTypes.NameIdentifier, user.Id.ToString())
             };
 
             SigningCredentials credEncryption = new SigningCredentials(_key, SecurityAlgorithms.HmacSha256);

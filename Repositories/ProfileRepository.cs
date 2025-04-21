@@ -23,9 +23,29 @@ namespace SkillTrade.Repositories
 
         public async Task<Profile?> GetProfileByIdAsync(int id)
         {
-            Profile? profile = await _context.Profiles.FindAsync(id);
+            Profile? profile = await _context.Profiles
+                                                .Where(p => p.Id == id)
+                                                .Include(p => p.ServiceList)
+                                                .FirstOrDefaultAsync();
 
             return profile;
+        }
+
+        public async Task<Profile> GetCurrentUserProfile(string guid)
+        {
+            return (await _context.Profiles
+                                        .Where(p => p.UserId == guid)
+                                        .Include(p => p.ServiceList)
+                                        .Include(p => p.Bookings)
+                                        .FirstOrDefaultAsync()
+                                        )!;
+        }
+
+        public async Task<int> GetCurrUserProfileId(string guid)
+        {
+            Profile profile = (await _context.Profiles.FirstOrDefaultAsync(p => p.UserId == guid))!;
+
+            return profile.Id;
         }
 
         public async Task<Profile> CreateProfileAsync(Profile profile)
@@ -35,12 +55,9 @@ namespace SkillTrade.Repositories
 
             return profile;
         }
-        public async Task UpdateProfileAsync(string guid, Profile updatedProfile)
+        public async Task UpdateProfileAsync(Profile currentProfile, Profile updatedProfile)
         {
-            Profile profile = (await _context.Profiles.FirstOrDefaultAsync(p => p.UserId == guid))!;
-            updatedProfile.Id = profile.Id;
-
-            _context.Profiles.Entry(profile).CurrentValues.SetValues(updatedProfile);
+            _context.Profiles.Entry(currentProfile).CurrentValues.SetValues(updatedProfile);
             await _context.SaveChangesAsync();
         }
 

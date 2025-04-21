@@ -1,5 +1,8 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using System.Security.Claims;
+using Azure;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using SkillTrade.Dtos.Create;
 using SkillTrade.Dtos.ToClient;
@@ -45,6 +48,17 @@ namespace SkillTrade.Controllers
             return Ok(profile.ToProfileDto());
         }
 
+        [HttpGet("myprofile")]
+        [Authorize]
+        public async Task<IActionResult> GetMyProfile()
+        {
+            string guid = User.FindFirstValue(ClaimTypes.NameIdentifier)!;
+
+            Profile profile = await _profileRepo.GetCurrentUserProfile(guid);
+
+            return Ok(profile.ToProfileDto());
+        }
+
         [HttpPost]
         [Authorize]
         public async Task<IActionResult> CreateProfile(CreateProfileDto createProfileDto)
@@ -58,13 +72,15 @@ namespace SkillTrade.Controllers
         [Authorize]
         public async Task<IActionResult> UpdateProfile(UpdateProfileDto updateProfileDto)
         {
-            string username = User.GetUsername()!;
-            UserIdentity user = (await _userManager.FindByNameAsync(username))!;
-            string guid = user.Id;
+            string guid = User.FindFirstValue(ClaimTypes.NameIdentifier)!;
+
+            Profile currUserProfile = await _profileRepo.GetCurrentUserProfile(guid);
 
             Profile updatedProfile = updateProfileDto.ToProfileEntity();
+            updatedProfile.Id = currUserProfile.Id;
+            updatedProfile.UserId = guid;
 
-            await _profileRepo.UpdateProfileAsync(guid, updatedProfile);
+            await _profileRepo.UpdateProfileAsync(currUserProfile, updatedProfile);
 
             return NoContent();
         }

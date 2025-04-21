@@ -50,7 +50,7 @@ builder.Services.AddAuthentication(x =>
 });
 
 
-builder.Services.AddControllers();
+builder.Services.AddControllers(); 
 builder.Services.AddOpenApi("v1", options => { options.AddDocumentTransformer<BearerSecuritySchemeTransformer>(); });
 
 builder.Services.AddScoped<ITokenService, TokenService>();

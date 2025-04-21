@@ -59,6 +59,7 @@ namespace SkillTrade.Controllers
             return Ok(profile.ToProfileDto());
         }
 
+        // need correction to be used only by admin
         [HttpPost]
         [Authorize]
         public async Task<IActionResult> CreateProfile(CreateProfileDto createProfileDto)
@@ -85,6 +86,7 @@ namespace SkillTrade.Controllers
             return NoContent();
         }
 
+        // needs correction to be used only by admin and instead account deletion should be set up followed with deletion of user profile with all connected services, bookings, reviews
         [HttpDelete("{id}")]
         [Authorize]
         public async Task<IActionResult> DeleteProfile(int id)

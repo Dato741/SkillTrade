@@ -55,6 +55,9 @@ builder.Services.AddOpenApi("v1", options => { options.AddDocumentTransformer<Be
 
 builder.Services.AddScoped<ITokenService, TokenService>();
 builder.Services.AddScoped<IProfileRepository, ProfileRepository>();
+builder.Services.AddScoped<IServiceListingRepository, ServiceListingRepository>();
+builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
+builder.Services.AddScoped<IBookingRepository, BookingRepository>();
 
 var app = builder.Build();
 

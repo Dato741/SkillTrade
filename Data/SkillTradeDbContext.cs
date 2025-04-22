@@ -42,6 +42,29 @@ namespace SkillTrade.Data
                 }
             );
 
+            builder.Entity<UserIdentity>().HasData(
+                new UserIdentity
+                {
+                    Id = "3e55614e-6d26-4f71-9db5-0f7b3cc880fc",
+                    UserName = "admin",
+                    NormalizedUserName = "ADMIN",
+                    Email = "admin@app.com",
+                    NormalizedEmail = "ADMIN@APP.COM",
+                    EmailConfirmed = true,
+                    PasswordHash = "AQAAAAIAAYagAAAAEEZUbfvj9wdorBngRTEHr1wYeG24CeMolHtwP9Rirb98ZuwA5d3K/pTH3NthOP6Wvw==",
+                    SecurityStamp = "dcb84c17-f78e-4ddf-9c84-3d60c4a66e29",
+                    ConcurrencyStamp = "9f937aa7-27e5-4dc3-a038-9861d5c8f13b"
+                }
+            );
+
+            builder.Entity<IdentityUserRole<string>>().HasData(
+                new IdentityUserRole<string>
+                {
+                    UserId = "3e55614e-6d26-4f71-9db5-0f7b3cc880fc",
+                    RoleId = "1"
+                }
+            );
+
             builder.Entity<Category>().HasData(
                 new Category { Id = 1, Name = "Plumbing" },
                 new Category { Id = 2, Name = "Electrical" },

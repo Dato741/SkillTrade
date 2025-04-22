@@ -4,6 +4,6 @@ namespace SkillTrade.Interfaces
 {
     public interface ITokenService
     {
-        public string CreateToken(UserIdentity user);
+        public Task<string> CreateToken(UserIdentity user);
     }
 }

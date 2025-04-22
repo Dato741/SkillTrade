@@ -1,9 +1,12 @@
 ﻿using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
 using SkillTrade.Identity;
 using SkillTrade.Interfaces;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace SkillTrade.Services
 {
@@ -11,8 +14,9 @@ namespace SkillTrade.Services
     {
         private readonly IConfiguration _config;
         private readonly SymmetricSecurityKey _key;
+        private readonly UserManager<UserIdentity> _userManager;
 
-        public TokenService(IConfiguration config)
+        public TokenService(IConfiguration config, UserManager<UserIdentity> userManager)
         {
             _config = config;
 
@@ -21,9 +25,10 @@ namespace SkillTrade.Services
                 throw new Exception("JWT Key is missing from configuration");
 
             _key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["JwtSettings:Key"]!));
+            _userManager = userManager;
         }
 
-        public string CreateToken(UserIdentity user)
+        public async Task<string> CreateToken(UserIdentity user)
         {
             List<Claim> claims = new List<Claim>
             {
@@ -31,6 +36,9 @@ namespace SkillTrade.Services
                 new Claim(JwtRegisteredClaimNames.GivenName, user.UserName!),
                 new Claim(ClaimTypes.NameIdentifier, user.Id.ToString())
             };
+
+            var roles = await _userManager.GetRolesAsync(user);
+            claims.AddRange(roles.Select(role => new Claim(ClaimTypes.Role, role)));
 
             SigningCredentials credEncryption = new SigningCredentials(_key, SecurityAlgorithms.HmacSha256);
 

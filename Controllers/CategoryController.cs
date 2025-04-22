@@ -19,7 +19,6 @@ namespace SkillTrade.Controllers
         }
 
         [HttpGet]
-        [Authorize]
         public async Task<IActionResult> GetAllCategories(int pageNumber = 1, int pageSize = 10)
         {
             List<Category> categories = await _categoryRepo.GetAllCategoriesAsync(pageNumber, pageSize);
@@ -28,7 +27,6 @@ namespace SkillTrade.Controllers
         }
 
         [HttpGet("{categoryId}")]
-        [Authorize]
         public async Task<IActionResult> GetCategoryById(int categoryId)
         {
             Category? category = await _categoryRepo.GetCategoryAsync(categoryId);
@@ -39,7 +37,7 @@ namespace SkillTrade.Controllers
         }
 
         [HttpPost]
-        [Authorize]
+        [Authorize(Roles = "admin")]
         public async Task<IActionResult> CreateCategory([FromBody] CreateCategoryDto createCategoryDto)
         {
             Category category = createCategoryDto.ToCategoryEntity();
@@ -50,7 +48,7 @@ namespace SkillTrade.Controllers
         }
 
         [HttpDelete("{categoryId}")]
-        [Authorize]
+        [Authorize(Roles = "admin")]
         public async Task<IActionResult> DeleteCategory(int categoryId)
         {
             await _categoryRepo.DeleteCategoryAsync(categoryId);

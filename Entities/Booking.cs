@@ -13,9 +13,5 @@ namespace SkillTrade.Entities
 
         [JsonIgnore]
         public ServiceListing? Service { get; set; }
-        public int? ReviewId { get; set; }
-
-        [JsonIgnore]
-        public Review? Review { get; set; }
     }
 }

@@ -42,6 +42,20 @@ namespace SkillTrade.Data
                 }
             );
 
+            builder.Entity<Category>().HasData(
+                new Category { Id = 1, Name = "Plumbing" },
+                new Category { Id = 2, Name = "Electrical" },
+                new Category { Id = 3, Name = "Home Cleaning" },
+                new Category { Id = 4, Name = "Web Development" },
+                new Category { Id = 5, Name = "Graphic Design" },
+                new Category { Id = 6, Name = "Tutoring" },
+                new Category { Id = 7, Name = "Pet Services" },
+                new Category { Id = 8, Name = "Fitness Coaching" },
+                new Category { Id = 9, Name = "Translation" },
+                new Category { Id = 10, Name = "Photography" }
+            );
+
+
             builder.Entity<Profile>()
                 .HasMany(u => u.ServiceList)
                 .WithOne(s => s.Profile)

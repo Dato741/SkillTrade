@@ -16,7 +16,8 @@ namespace SkillTrade.Mapping
                 Name = serviceListing.Name,
                 Description = serviceListing.Description,
                 PayOffered = serviceListing.PayOffered,
-                ServicePostedBy = serviceListing.ServicePostedBy
+                ServicePostedBy = serviceListing.ServicePostedBy,
+                Reviews = serviceListing.Reviews?.Select(r => r.ToReviewDto()).ToList()
             };
         }
 

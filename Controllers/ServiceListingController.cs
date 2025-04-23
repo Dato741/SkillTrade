@@ -97,11 +97,15 @@ namespace SkillTrade.Controllers
         [Authorize]
         public async Task<IActionResult> DeleteService(int serviceId)
         {
+            int profileId = await _profileRepo.GetCurrUserProfileId(Guid);
+            ServiceListing? service = await _serviceListingRepo.GetService(serviceId);
+
+            if (service == null || service.ProfileId != profileId)
+                return NotFound("Service not found");
+
             await _serviceListingRepo.DeleteService(serviceId);
 
             return NoContent();
-
-            // needs correction to delete only authorized users services
         }
     }
 }

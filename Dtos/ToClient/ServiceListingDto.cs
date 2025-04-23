@@ -8,5 +8,6 @@
         public string Description { get; set; } = string.Empty;
         public int PayOffered { get; set; }
         public string ServicePostedBy { get; set; } = string.Empty;
+        public List<ReviewDto> Reviews { get; set; } = new List<ReviewDto>();
     }
 }

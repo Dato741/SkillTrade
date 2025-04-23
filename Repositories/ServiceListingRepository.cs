@@ -16,7 +16,11 @@ namespace SkillTrade.Repositories
 
         public async Task<List<ServiceListing>> GetAllServices()
         {
-            List<ServiceListing> services = await _context.ServiceListings.Include(s => s.Category).ToListAsync();
+            List<ServiceListing> services = await _context.ServiceListings
+                                                        .Include(s => s.Category)
+                                                        .Include(s => s.Reviews)
+                                                        .ThenInclude(r => r.Profile)
+                                                        .ToListAsync();
 
             return services;
         }

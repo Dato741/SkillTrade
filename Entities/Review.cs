@@ -10,9 +10,9 @@ namespace SkillTrade.Entities
 
         [JsonIgnore]
         public Profile? Profile { get; set; }
-        public int? BookingId { get; set; }
+        public int? ServiceId { get; set; }
 
         [JsonIgnore]
-        public Booking? Booking { get; set; }
+        public ServiceListing? Service { get; set; }
     }
 }
